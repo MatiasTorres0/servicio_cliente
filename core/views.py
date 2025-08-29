@@ -1,19 +1,25 @@
 from django.shortcuts import render, redirect
 from .forms import SolicitudForm, CalificacionForm, RespuestaForm
 from .models import servicio_cliente  # Changed to capital letter to match model name convention
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def inicio(request):
     return render(request, 'core/inicio.html')
 
+@login_required
 def solicitud(request):
     if request.method == 'POST':
-        form = SolicitudForm(request.POST)  # Fixed typo from S to SolicitudForm
+        form = SolicitudForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('core:enviado')
+            # Guardar la solicitud asociándola al usuario actual
+            solicitud = form.save(commit=False)
+            solicitud.user = request.user  # Asigna el usuario actual
+            solicitud.save()
+            return redirect('solicitudes')  # Redirige a la lista de solicitudes
     else:
         form = SolicitudForm()
+    
     return render(request, 'core/solicitud.html', {'form': form})
 
 def calificacion(request):

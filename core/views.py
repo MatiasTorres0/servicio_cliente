@@ -31,3 +31,6 @@ def respuesta(request):
     else:
         form = RespuestaForm()
     return render(request, 'core/respuesta.html', {'form': form})
+
+def resumen(request):
+    return render(request, 'core/resumen.html')

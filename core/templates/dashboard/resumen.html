@@ -1,22 +1,273 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Resumen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#7c3aed',
+                        accent: '#f59e0b',
+                        dark: '#1e293b',
+                        light: '#f8fafc'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body{
-            background-color: #f2f2f2;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .gradient-border {
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+            padding: 2px;
+            border-radius: 16px;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #2563eb, #7c3aed, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Bienvenido a tú resumen</h1>
-    </div>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-r from-primary to-secondary w-12 h-12 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-user-circle text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold gradient-text">Mi Resumen</h1>
+                        <p class="text-gray-600 text-sm">Panel de control personal</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="bg-gradient-to-r from-primary to-secondary text-white px-5 py-2 rounded-xl font-semibold hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 shadow-md flex items-center">
+                        <i class="fas fa-bell mr-2"></i>
+                        <span class="hidden md:inline">Notificaciones</span>
+                    </button>
+                    <button class="bg-gray-100 text-gray-700 px-5 py-2 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-300 flex items-center">
+                        <i class="fas fa-cog mr-2"></i>
+                        <span class="hidden md:inline">Configuración</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Welcome Section -->
+        <section class="mb-12 animate-fade-in-up">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">¡Bienvenido de nuevo!</h2>
+                <p class="text-gray-600 text-lg mb-6">Aquí puedes ver tu información personal y gestionar tus solicitudes de servicio.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <!-- User Info Card -->
+                    <div class="gradient-border">
+                        <div class="bg-white rounded-xl p-6 h-full">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-user text-primary text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-800">Información Personal</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Consulta y actualiza tus datos personales</p>
+                            <button class="text-primary font-semibold flex items-center" >
+                                Ver detalles <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Requests Card -->
+                    <div class="gradient-border">
+                        <div class="bg-white rounded-xl p-6 h-full">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-file-alt text-secondary text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-800">Solicitudes</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Gestiona todas tus solicitudes de servicio</p>
+                            <button class="text-secondary font-semibold flex items-center" href="{% url 'solicitudes' %}">
+                                Ver todas <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Support Card -->
+                    <div class="gradient-border">
+                        <div class="bg-white rounded-xl p-6 h-full">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                                    <i class="fas fa-headset text-accent text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-800">Soporte</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Obtén ayuda y soporte técnico</p>
+                            <button class="text-accent font-semibold flex items-center">
+                                Contactar <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action Buttons Section -->
+        <section class="mb-12 animate-fade-in-up">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Acciones Rápidas</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Create Request Card -->
+                    <div class="card-hover bg-gradient-to-r from-primary to-blue-600 rounded-2xl shadow-lg p-6 text-white transition-all duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-white/20 p-3 rounded-lg mr-4">
+                                <i class="fas fa-plus-circle text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Nueva Solicitud</h3>
+                        </div>
+                        <p class="mb-6 opacity-90">Crea una nueva solicitud de servicio</p>
+                        <a href="{% url 'solicitud' %}" class="bg-white text-primary font-bold py-3 px-6 rounded-xl hover:bg-gray-100 transition-colors duration-300 flex items-center justify-center">
+                            <i class="fas fa-paper-plane mr-2"></i> Crear Solicitud
+                        </a>
+                    </div>
+                    
+                    <!-- View Requests Card -->
+                    <div class="card-hover bg-gradient-to-r from-secondary to-purple-600 rounded-2xl shadow-lg p-6 text-white transition-all duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-white/20 p-3 rounded-lg mr-4">
+                                <i class="fas fa-list text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Mis Solicitudes</h3>
+                        </div>
+                        <p class="mb-6 opacity-90">Consulta el estado de tus solicitudes</p>
+                        <a href="{% url 'solicitudes' %}" class="bg-white text-secondary font-bold py-3 px-6 rounded-xl hover:bg-gray-100 transition-colors duration-300 flex items-center justify-center">
+                            <i class="fas fa-eye mr-2"></i> Ver Solicitudes
+                        </a>
+                    </div>
+                    
+                    <!-- Logout Card -->
+                    <div class="card-hover bg-gradient-to-r from-gray-700 to-gray-900 rounded-2xl shadow-lg p-6 text-white transition-all duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-white/20 p-3 rounded-lg mr-4">
+                                <i class="fas fa-sign-out-alt text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Cerrar Sesión</h3>
+                        </div>
+                        <p class="mb-6 opacity-90">Salir de tu cuenta de forma segura</p>
+                        <a href="{% url 'logout' %}" class="bg-white text-gray-800 font-bold py-3 px-6 rounded-xl hover:bg-gray-200 transition-colors duration-300 flex items-center justify-center">
+                            <i class="fas fa-lock mr-2"></i> Cerrar Sesión
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity Section -->
+        <section class="animate-fade-in-up">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Actividad Reciente</h2>
+                    <button class="text-primary font-semibold">
+                        Ver todo <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- Activity Item 1 -->
+                    <div class="flex items-start p-4 hover:bg-gray-50 rounded-xl transition-colors duration-200">
+                        <div class="bg-green-100 p-3 rounded-lg mr-4">
+                            <i class="fas fa-check-circle text-green-500"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800">Solicitud completada</h4>
+                            <p class="text-gray-600">Tu solicitud #1234 ha sido procesada exitosamente</p>
+                        </div>
+                        <span class="text-gray-500 text-sm">Hace 2 horas</span>
+                    </div>
+                    
+                    <!-- Activity Item 2 -->
+                    <div class="flex items-start p-4 hover:bg-gray-50 rounded-xl transition-colors duration-200">
+                        <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                            <i class="fas fa-file-alt text-blue-500"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800">Nueva solicitud</h4>
+                            <p class="text-gray-600">Has creado una nueva solicitud de servicio</p>
+                        </div>
+                        <span class="text-gray-500 text-sm">Hace 1 día</span>
+                    </div>
+                    
+                    <!-- Activity Item 3 -->
+                    <div class="flex items-start p-4 hover:bg-gray-50 rounded-xl transition-colors duration-200">
+                        <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                            <i class="fas fa-exclamation-circle text-yellow-500"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800">Actualización requerida</h4>
+                            <p class="text-gray-600">Por favor actualiza tu información personal</p>
+                        </div>
+                        <span class="text-gray-500 text-sm">Hace 3 días</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <p class="text-gray-400">© 2023 Mi Resumen. Todos los derechos reservados.</p>
+                <div class="flex justify-center space-x-6 mt-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

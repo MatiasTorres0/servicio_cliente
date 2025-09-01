@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 
 LOGIN_REDIRECT_URL = '/resumen'
-LOGOUT_REDIRECT_URL = '/inicio'
+LOGOUT_REDIRECT_URL = '/'
 
 # Application definition
 
@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core'
+    'core',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

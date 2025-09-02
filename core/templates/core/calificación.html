@@ -1,58 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calificación</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background-color: #f8f9fa;
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
         }
-        .rating-container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 30px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        .star-rating input {
+            display: none;
         }
-        .form-title {
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 30px;
+        .star-rating label {
+            cursor: pointer;
+            font-size: 2rem;
+            padding: 0 0.1em;
+            transition: color 0.2s;
         }
-        .btn-submit {
-            background-color: #3498db;
-            border: none;
-            padding: 10px 30px;
-            width: 100%;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-        .btn-submit:hover {
-            background-color: #2980b9;
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: #f59e0b;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="rating-container">
-            <h1 class="form-title">Calificación</h1>
-            <form method="post" class="needs-validation">
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-6">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Calificación</h1>
+            
+            <form method="post" class="space-y-6">
                 {% csrf_token %}
-                <div class="mb-4">
-                    {{ form.as_p|safe }}
+                
+                <!-- Sistema de estrellas -->
+                <div class="bg-gray-800 rounded-lg p-4 mb-6">
+                    <div class="text-center text-white mb-2">---------</div>
+                    <div class="star-rating">
+                        <input type="radio" name="{{ form.calificacion.html_name }}" id="star5" value="5" {% if form.calificacion.value == '5' %}checked{% endif %}>
+                        <label for="star5" class="text-gray-500">★</label>
+                        
+                        <input type="radio" name="{{ form.calificacion.html_name }}" id="star4" value="4" {% if form.calificacion.value == '4' %}checked{% endif %}>
+                        <label for="star4" class="text-gray-500">★</label>
+                        
+                        <input type="radio" name="{{ form.calificacion.html_name }}" id="star3" value="3" {% if form.calificacion.value == '3' %}checked{% endif %}>
+                        <label for="star3" class="text-gray-500">★</label>
+                        
+                        <input type="radio" name="{{ form.calificacion.html_name }}" id="star2" value="2" {% if form.calificacion.value == '2' %}checked{% endif %}>
+                        <label for="star2" class="text-gray-500">★</label>
+                        
+                        <input type="radio" name="{{ form.calificacion.html_name }}" id="star1" value="1" {% if form.calificacion.value == '1' %}checked{% endif %}>
+                        <label for="star1" class="text-gray-500">★</label>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-submit">
+                
+                <!-- Comentario -->
+                <div class="mb-4">
+                    <label for="{{ form.comentario.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Comentario</label>
+                    {{ form.comentario|safe }}
+                </div>
+                
+                <!-- Fecha comentario -->
+                <div class="mb-4">
+                    <label for="{{ form.fecha_comentario.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Fecha Comentario</label>
+                    {{ form.fecha_comentario|safe }}
+                </div>
+                
+                <!-- Botón de envío -->
+                <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300">
                     Enviar Calificación
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Asegurarse de que los campos tengan las clases de Tailwind
+        document.addEventListener('DOMContentLoaded', function() {
+            // Añadir clases a los campos de texto
+            const comentarioField = document.getElementById('{{ form.comentario.id_for_label }}');
+            if (comentarioField) {
+                comentarioField.classList.add('w-full', 'rounded-md', 'border-gray-300', 'shadow-sm', 'p-2');
+            }
+            
+            // Añadir clases a los campos de fecha
+            const fechaField = document.getElementById('{{ form.fecha_comentario.id_for_label }}');
+            if (fechaField) {
+                fechaField.classList.add('w-full', 'rounded-md', 'border-gray-300', 'shadow-sm', 'p-2');
+            }
+        });
+    </script>
 </body>
 </html>

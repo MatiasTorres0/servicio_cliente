@@ -21,30 +21,33 @@ def solicitud(request):
         form = SolicitudForm()
     
     return render(request, 'core/solicitud.html', {'form': form})
-
-def calificacion(request):
+@login_required
+def calificacion(request, pk):
+    instancia = servicio_cliente.objects.get(id=pk, user=request.user)  # Asegura que pertenezca al usuario
     if request.method == 'POST':
-        form = CalificacionForm(request.POST)
+        form = CalificacionForm(request.POST, instance=instancia)
         if form.is_valid():
             form.save()
-            return redirect('core:enviado')
+            return redirect('solicitudes')  # O a donde quieras redirigir
     else:
-        form = CalificacionForm()
+        form = CalificacionForm(instance=instancia)
     return render(request, 'core/calificación.html', {'form': form})
 
-def respuesta(request):
+@login_required
+def respuesta(request, pk):
+    instancia = servicio_cliente.objects.get(id=pk)  # Puedes agregar filtros si es necesario
     if request.method == 'POST':
-        form = RespuestaForm(request.POST)
+        form = RespuestaForm(request.POST, instance=instancia)
         if form.is_valid():
             form.save()
-            return redirect('core:enviado')
+            return redirect('solicitudes')
     else:
-        form = RespuestaForm()
+        form = RespuestaForm(instance=instancia)
     return render(request, 'core/respuesta.html', {'form': form})
-
+@login_required
 def resumen(request):
     return render(request, 'dashboard/resumen.html')
-
+@login_required
 def solicitudes(request):
     solicitudes = servicio_cliente.objects.all()  # Changed to capital letter to match model name
     return render(request, 'dashboard/solicitudes.html', {'solicitudes': solicitudes})
